@@ -5,6 +5,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import smtplib
 from email.mime.text import MIMEText
 
+application = Application.builder().token(TELEGRAM_TOKEN).read_timeout(20).connect_timeout(20).build()
+
 # Настройки логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
