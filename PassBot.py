@@ -5,7 +5,6 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import smtplib
 from email.mime.text import MIMEText
 
-application = Application.builder().token(TELEGRAM_TOKEN).read_timeout(20).connect_timeout(20).build()
 
 # Настройки логирования
 logging.basicConfig(
@@ -19,6 +18,8 @@ EMAIL_LOGIN = 'glebnonstop@mail.ru'
 EMAIL_PASSWORD = '05e7GXnbLx0QupCXe17E'
 RECIPIENT_EMAIL = 'Inbox@rika-e.bizml.ru'
 CORPORATE_PASSWORD = '3232'
+
+application = Application.builder().token(TELEGRAM_TOKEN).read_timeout(20).connect_timeout(20).build()
 
 # Этапы диалога
 PASSWORD, ORDER_PASS, CAR_DETAILS = range(3)
