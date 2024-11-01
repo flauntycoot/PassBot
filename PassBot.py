@@ -1,27 +1,22 @@
-import os
 import ssl
 import logging
-from dotenv import load_dotenv
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 import smtplib
 from email.mime.text import MIMEText
 
-# Настройка логирования
+# Настройки логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
-# Загружаем переменные из .env файла
-load_dotenv()
-
-# Переменные из .env
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-EMAIL_LOGIN = os.getenv('EMAIL_LOGIN')
-EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
-RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
-CORPORATE_PASSWORD = os.getenv('CORPORATE_PASSWORD')
+# Параметры бота и почты
+TELEGRAM_TOKEN = '7772743241:AAFJbbrt_BTpLc8b-b4ISOPyzeYnV9PKvfQ'
+EMAIL_LOGIN = 'glebnonstop@mail.ru'
+EMAIL_PASSWORD = '05e7GXnbLx0QupCXe17E'
+RECIPIENT_EMAIL = 'Inbox@rika-e.bizml.ru'
+CORPORATE_PASSWORD = '3232'
 
 # Этапы диалога
 PASSWORD, ORDER_PASS, CAR_DETAILS = range(3)
