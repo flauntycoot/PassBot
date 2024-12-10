@@ -118,19 +118,29 @@ async def car_details(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 # Обработка кнопки 'История'
 async def show_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
+    MAX_MESSAGE_LENGTH = 4096  # Максимальная длина сообщения в Telegram
+
     if user_roles.get(user_id) == ADMIN_ROLE:  # Только администратор может просматривать историю
         try:
-            with open("history.txt", "r") as file:
+            with open("history.txt", "r", encoding="utf-8") as file:
                 history = file.read()
-            if history:
-                await update.message.reply_text(f"История запросов:\n{history}")
-            else:
+            
+            if not history.strip():
                 await update.message.reply_text("История запросов пуста.")
+                return
+
+            # Разбиваем историю на части длиной не более MAX_MESSAGE_LENGTH
+            history_parts = [history[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(history), MAX_MESSAGE_LENGTH)]
+            
+            for part in history_parts:
+                await update.message.reply_text(part)
+
         except Exception as e:
             logger.error("Ошибка при чтении истории: %s", e)
             await update.message.reply_text("Не удалось загрузить историю.")
     else:
         await update.message.reply_text("У вас нет доступа к истории.")
+
 
 # Обработка кнопки 'Пользователи'
 async def show_users(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
