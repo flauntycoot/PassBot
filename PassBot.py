@@ -196,3 +196,6 @@ def main():
     # Запуск бота
     application.run_polling()
     logger.info("Telegram бот завершил работу")
+
+if __name__ == '__main__':
+    main()
