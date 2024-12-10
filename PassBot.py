@@ -169,7 +169,11 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 def main():
     logger.info("Запуск Telegram бота")
     global application
-    application = Application.builder().token(TELEGRAM_TOKEN).build()
+    application = Application.builder() \
+        .token(TELEGRAM_TOKEN) \
+        .read_timeout(60) \  # Увеличиваем таймаут чтения
+        .connect_timeout(60) \  # Увеличиваем таймаут подключения
+        .build()
 
     # Настройка диалогов
     conv_handler = ConversationHandler(
@@ -178,8 +182,8 @@ def main():
             PASSWORD: [MessageHandler(filters.TEXT & ~filters.COMMAND, verify_password)],
             ORDER_PASS: [
                 MessageHandler(filters.Regex('^Заказать пропуск$'), order_pass),
-                MessageHandler(filters.Regex('^История$'), show_history),  # Обработка кнопки 'История'
-                MessageHandler(filters.Regex('^Пользователи$'), show_users),  # Обработка кнопки 'Пользователи'
+                MessageHandler(filters.Regex('^История$'), show_history),
+                MessageHandler(filters.Regex('^Пользователи$'), show_users),
             ],
             CAR_DETAILS: [MessageHandler(filters.TEXT & ~filters.COMMAND, car_details)],
         },
@@ -192,6 +196,3 @@ def main():
     # Запуск бота
     application.run_polling()
     logger.info("Telegram бот завершил работу")
-
-if __name__ == '__main__':
-    main()
