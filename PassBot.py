@@ -171,8 +171,8 @@ def main():
     global application
     application = Application.builder() \
         .token(TELEGRAM_TOKEN) \
-        .read_timeout(60) \  # Увеличиваем таймаут чтения
-        .connect_timeout(60) \  # Увеличиваем таймаут подключения
+        .read_timeout(60) \
+        .connect_timeout(60) \
         .build()
 
     # Настройка диалогов
